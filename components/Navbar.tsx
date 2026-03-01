@@ -1,5 +1,7 @@
 import React from "react";
 import Image from "next/image";
+import SignInModal from "./modals/SignInModal";
+import SignUpModal from "./modals/SignUpModal";
 
 const Navbar = () => {
   return (
@@ -27,7 +29,8 @@ const Navbar = () => {
           Privacy policy
         </a>
       </div>
-      <button className="nav__button">Sign In</button>
+      <SignInModal />
+      <SignUpModal />
     </nav>
   );
 };
