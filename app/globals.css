@@ -1,12 +1,26 @@
-@import "tailwindcss";
-
 /* @import url("https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap"); */
 
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-  font-family: "Onest", sans-serif;
+@import "tailwindcss";
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  * {
+    margin: 0;
+
+    padding: 0;
+
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family: Onest, sans-serif;
+    /* color: #333; */
+  }
 }
 
 button {
