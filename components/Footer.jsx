@@ -1,4 +1,6 @@
 import React from "react";
+import { FaFacebook, FaInstagram, FaTiktok } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 
 const Footer = () => {
   return (
@@ -36,20 +38,20 @@ const Footer = () => {
         <div className="links__container">
           <img src="assets/logo-light.png" alt="" className="links__logo" />
           <div className="links__list">
-            <a className="links__link" href="#">
-              <i className="fa-brands fa-instagram links__link__icon"></i>
+            <a className="links__link gap-2" href="#">
+              <FaInstagram />
               <span className="links__link__text">Instagram</span>
             </a>
-            <a className="links__link" href="#">
-              <i className="fa-brands fa-twitter links__link__icon"></i>
+            <a className="links__link gap-2" href="#">
+              <FaXTwitter />
               <span className="links__link__text">Twitter</span>
             </a>
-            <a className="links__link" href="#">
-              <i className="fa-brands fa-facebook links__link__icon"></i>
+            <a className="links__link gap-2" href="#">
+              <FaFacebook />
               <span className="links__link__text">Facebook</span>
             </a>
-            <a className="links__link" href="#">
-              <i className="fa-brands fa-tiktok links__link__icon"></i>
+            <a className="links__link gap-2" href="#">
+              <FaTiktok />
               <span className="links__link__text">Tiktok</span>
             </a>
           </div>

@@ -1,10 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+interface authState {
+  name: string | null;
+  username: string | null;
+  email: string | null;
+  uid: string;
+  loading: boolean;
+}
+
+const initialState: authState = {
   name: "",
   username: "",
   email: "",
   uid: "",
+  loading: true,
 };
 
 const userSlice = createSlice({
@@ -16,6 +25,7 @@ const userSlice = createSlice({
       state.username = action.payload.username;
       state.email = action.payload.email;
       state.uid = action.payload.uid;
+      state.loading = action.payload.loading;
     },
 
     signOutUser: (state) => {
@@ -23,6 +33,7 @@ const userSlice = createSlice({
       state.username = "";
       state.email = "";
       state.uid = "";
+      state.loading = false;
     },
   },
 });
