@@ -3,55 +3,20 @@
 import React, { useState } from "react";
 import { Modal } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { UseDispatch } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
 import { openSignInModal, closeSignUpModal } from "@/redux/slices/modalSlice";
 import { UserIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { FaGoogle } from "react-icons/fa";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  GoogleAuthProvider,
-  onAuthStateChanged,
-  signInWithPopup,
-} from "firebase/auth";
-import { auth } from "@/firebase";
-import { signInUser } from "@/redux/slices/userSlice";
+import useAuth from "@/hooks/useAuth";
 
 const SignUpModal = () => {
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const { handleSignUp, error } = useAuth();
   const isOpen = useSelector(
     (state: RootState) => state.modals.signUpModalOpen,
   );
   const dispatch: AppDispatch = useDispatch();
-
-  async function handleSignUp() {
-    try {
-      const userCredentials = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password,
-      );
-
-      dispatch(
-        signInUser({
-          name: userCredentials.user.displayName,
-          username: userCredentials.user.email!.split("@")[0],
-          email: userCredentials.user.email,
-          uid: userCredentials.user.uid,
-        }),
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async function handleGoogleSignUp() {
-    const userCredentials = undefined;
-  }
 
   return (
     <>
@@ -70,9 +35,9 @@ const SignUpModal = () => {
             onClick={() => dispatch(closeSignUpModal())}
           />
           <h1 className="text-3xl font-bold text-center mb-2.5">Sign Up</h1>
-          <h2 className="text-red-400/0 text-sm mb-2.5 text-center">
-            Error: Invalid email or password
-          </h2>
+          {error && (
+            <h2 className="text-red-400 text-sm mb-2.5 text-center">{error}</h2>
+          )}
           <div className="flex flex-col">
             <div className="w-full gap-3 flex flex-col">
               <button
@@ -124,14 +89,22 @@ const SignUpModal = () => {
             <button
               className="bg-[#320580] text-white 
                     w-full h-11 rounded-full font-semibold "
-              onClick={() => handleSignUp()}
+              onClick={() => handleSignUp(email, password)}
             >
               Sign Up
             </button>
           </div>
           <div className="flex justify-center mt-3 gap-1 text-sm">
             <span>Already have an account?</span>
-            <button className="underline text-[#4f46e5]">Log in</button>
+            <button
+              className="underline text-[#4f46e5]"
+              onClick={() => {
+                dispatch(closeSignUpModal());
+                dispatch(openSignInModal());
+              }}
+            >
+              Log in
+            </button>
           </div>
         </div>
       </Modal>

@@ -1,61 +1,36 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { UseDispatch } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
 import {
   openSignInModal,
   closeSignInModal,
   openSignUpModal,
+  openForgotPassModal,
 } from "@/redux/slices/modalSlice";
 import { UserIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { FaGoogle } from "react-icons/fa";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  GoogleAuthProvider,
-  onAuthStateChanged,
-} from "firebase/auth";
-import { auth } from "@/firebase";
-import { signInUser } from "@/redux/slices/userSlice";
+import useAuth from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 
 const SignInModal = () => {
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const router = useRouter();
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const { handleSignIn, handleGoogleSignIn, authenticated, error } = useAuth();
   const isOpen = useSelector(
     (state: RootState) => state.modals.signInModalOpen,
   );
+  const user = useSelector((state: RootState) => state.user);
 
   const dispatch: AppDispatch = useDispatch();
 
-  async function handleSignUp() {
-    try {
-      const userCredentials = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password,
-      );
-
-      dispatch(
-        signInUser({
-          name: userCredentials.user.displayName,
-          username: userCredentials.user.email!.split("@")[0],
-          email: userCredentials.user.email,
-          uid: userCredentials.user.uid,
-        }),
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  }
   return (
     <>
       <button
-        className="nav__button"
+        className={`nav__button`}
         onClick={() => dispatch(openSignInModal())}
       >
         Sign In
@@ -76,15 +51,17 @@ const SignInModal = () => {
             onClick={() => dispatch(closeSignInModal())}
           />
           <h1 className="text-3xl font-bold text-center mb-2.5">Log In</h1>
-          <h2 className="text-red-400/0 text-sm mb-2.5 text-center">
-            Error: Invalid email or password
-          </h2>
+          {error && (
+            <h2 className="text-red-400 text-sm mb-2.5 text-center">{error}</h2>
+          )}
+
           <div className="flex flex-col">
             <div className="w-full gap-3 flex flex-col">
               <button
                 className="border-3 border-gray-200 rounded-xl 
               px-5 py-3 text-sm text-left flex gap-3 items-center
                text-[#404654] font-semibold hover:bg-black/10"
+                onClick={() => handleGoogleSignIn()}
               >
                 <FaGoogle />
                 <span>Login with Google</span>
@@ -93,6 +70,7 @@ const SignInModal = () => {
                 className="border-3 border-gray-200 rounded-xl 
               px-5 py-3 text-sm text-left flex gap-3 items-center
                text-[#404654] font-semibold hover:bg-black/10"
+                onClick={() => handleSignIn("john@gmail.com", "676767")}
               >
                 <UserIcon className="w-4" />
                 <span>Login as Guest</span>
@@ -111,6 +89,8 @@ const SignInModal = () => {
                 type="email"
                 placeholder="your@gmail.com"
                 className="border border-gray-300 rounded-xl px-4 py-2 text-sm"
+                onChange={(event) => setEmail(event.target.value)}
+                value={email}
               />
             </div>
             <div className="w-full mb-5 space-y-3 flex flex-col">
@@ -121,16 +101,25 @@ const SignInModal = () => {
                 type="password"
                 placeholder="Your password"
                 className="border border-gray-300 rounded-xl px-4 py-2 text-sm"
+                onChange={(event) => setPassword(event.target.value)}
+                value={password}
               />
             </div>
-            <span className="text-[#4f46e5] text-sm text-end">
+            <button
+              className="text-[#4f46e5] w-fit text-sm text-start"
+              onClick={() => {
+                dispatch(closeSignInModal());
+                dispatch(openForgotPassModal());
+              }}
+            >
               Forgot Password?
-            </span>
+            </button>
             <button
               className="bg-[#320580] text-white 
             w-full h-11 rounded-full font-semibold mt-4"
+              onClick={() => handleSignIn(email, password)}
             >
-              Login
+              Log in
             </button>
           </div>
           <div className="flex justify-center mt-3 gap-1 text-sm">

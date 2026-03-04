@@ -1,12 +1,14 @@
 import React from "react";
 import Image from "next/image";
-import SignInModal from "./modals/SignInModal";
-import SignUpModal from "./modals/SignUpModal";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import CheckLogged from "./modals/checkLogged";
+import Link from "next/link";
 
 const Navbar = () => {
   return (
     <nav>
-      <a href="#">
+      <Link href="/">
         <Image
           src="/assets/logo-dark.png"
           width={140}
@@ -14,7 +16,7 @@ const Navbar = () => {
           alt="Logo"
           className="nav__logo"
         />
-      </a>
+      </Link>
       <div className="nav__links">
         <a href="#" className="nav__link">
           About
@@ -29,8 +31,7 @@ const Navbar = () => {
           Privacy policy
         </a>
       </div>
-      <SignInModal />
-      <SignUpModal />
+      <CheckLogged />
     </nav>
   );
 };
