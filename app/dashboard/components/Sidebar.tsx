@@ -4,7 +4,7 @@ import Link from "next/link";
 import { MdOutlineDashboard } from "react-icons/md";
 import { IoIosBookmark, IoMdExit } from "react-icons/io";
 import { FaArrowTrendUp } from "react-icons/fa6";
-import { FaCog, FaSearch, FaTools } from "react-icons/fa";
+import { FaCog, FaRegBookmark, FaSearch, FaTools } from "react-icons/fa";
 import SideLinks from "../ui/SideLinks";
 
 interface SidebarLinks {
@@ -24,7 +24,7 @@ const Sidebar = () => {
     },
     {
       label: "Favorites",
-      icon: <IoIosBookmark />,
+      icon: <FaRegBookmark />,
       link: "/favorites",
       cursor: true,
     },
