@@ -1,9 +1,15 @@
+"use client";
+
 import { FaRegClock, FaRegStar, FaStar } from "react-icons/fa";
-import { MovieProps } from "./Carousel";
+import { MovieProps } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 
-const MovieCard = ({ movie }: { movie: MovieProps }) => {
+interface MovieCardProps {
+  movie: MovieProps;
+}
+
+const MovieCard = ({ movie }: MovieCardProps) => {
   return (
     <Link href={`/movie/${movie.id}`}>
       <div className="w-full bg-black/10 overflow-hidden rounded-xl">
@@ -19,7 +25,7 @@ const MovieCard = ({ movie }: { movie: MovieProps }) => {
             PREMIUM
           </div>
         </div>
-        <div className="pl-2 py-3 w-full flex flex-col gap-0.5">
+        <div className="px-1 sm:px-2 py-3 w-full flex flex-col gap-0.5">
           <h3 className="text-sm font-semibold truncate">
             {movie.title ?? "Unknown Title"}
           </h3>
@@ -27,7 +33,7 @@ const MovieCard = ({ movie }: { movie: MovieProps }) => {
             {movie.director ?? "Unknown Director"}
           </h4>
 
-          <div className="flex items-center gap-4 mt-1">
+          <div className="flex items-center gap-2 sm:gap-3 mt-1">
             <div className="flex items-center gap-1 text-[11px] text-white/60">
               <FaRegClock />
               <span>120 min</span>

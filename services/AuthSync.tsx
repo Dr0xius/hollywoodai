@@ -8,9 +8,8 @@ import { signInUser } from "@/redux/slices/userSlice";
 import { auth } from "@/firebase";
 
 const AuthSync = () => {
-  const user = useSelector((state: RootState) => state.user);
   const dispatch: AppDispatch = useDispatch();
-  return useEffect(() => {
+  useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (!currentUser) return console.log("no user");
 

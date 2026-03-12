@@ -6,7 +6,7 @@ import { UseApi } from "@/hooks/useApi";
 const SelectedMovies = async () => {
   const movies = await UseApi("/selectedMovies");
   return (
-    <div className="pt-6 px-8 mx-auto w-full h-full max-w-384">
+    <div className="pt-3 sm:pt-6 px-4 sm:px-8 mx-auto w-full h-full max-w-384">
       <h1 className="text-xl font-bold">Selected just for you</h1>
       <h3 className="text-sm text-white/60 mb-4">
         We think you'll like these.

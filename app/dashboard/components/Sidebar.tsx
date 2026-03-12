@@ -6,13 +6,7 @@ import { IoIosBookmark, IoMdExit } from "react-icons/io";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import { FaCog, FaRegBookmark, FaSearch, FaTools } from "react-icons/fa";
 import SideLinks from "../ui/SideLinks";
-
-interface SidebarLinks {
-  label: string;
-  icon?: React.ReactNode;
-  link?: string;
-  cursor?: boolean;
-}
+import { SidebarLinks } from "@/types";
 
 const Sidebar = () => {
   const sidebarLinks: SidebarLinks[] = [
