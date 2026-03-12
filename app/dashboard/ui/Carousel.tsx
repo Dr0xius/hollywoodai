@@ -2,30 +2,18 @@
 import React from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import MovieCard from "./MovieCard";
-
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "./carousel.css";
+import { MovieProps } from "@/types";
 
-export interface MovieProps {
-  id: string;
-  director: string;
-  title: string;
-  tagLine: string;
-  imageLink: string;
-  audioLink: string;
-  rating: string;
-  releaseYear: string;
-  type: string;
-  subscriptionRequired: boolean;
-  summary: string;
-  tags: string[];
-  movieDescription: string;
+interface Movies {
+  movies: MovieProps[];
 }
 
-const Carousel = ({ movies = [] }: MovieProps) => {
+const Carousel = ({ movies = [] }: Movies) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     inViewThreshold: 1,
@@ -33,7 +21,7 @@ const Carousel = ({ movies = [] }: MovieProps) => {
   });
   if (!movies)
     return (
-      <div className="w-full aspect-[2/3] bg-gray-800 animate-pulse rounded-xl" />
+      <div className="w-full aspect-2/3 bg-gray-800 animate-pulse rounded-xl" />
     );
 
   return (

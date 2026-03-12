@@ -5,15 +5,13 @@ import { MdOutlineDashboard } from "react-icons/md";
 import { IoIosBookmark, IoMdExit } from "react-icons/io";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import { FaCog, FaSearch, FaTools } from "react-icons/fa";
+import { SidebarLinks } from "@/types";
 
-interface SidebarLinks {
-  label: string;
-  icon?: React.ReactNode;
-  link?: string;
-  cursor?: boolean;
+interface SidebarLink {
+  link: SidebarLinks;
 }
 
-const SideLinks = ({ link }) => {
+const SideLinks = ({ link }: SidebarLink) => {
   return link.cursor ? (
     <Link
       href={`${link.link}`}
