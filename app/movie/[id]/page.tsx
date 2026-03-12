@@ -9,8 +9,15 @@ import {
   FaRegClock,
   FaStar,
 } from "react-icons/fa";
+import { UseApi } from "@/hooks/useApi";
+interface apiProp {
+  params: Promise<{ id: string }>;
+}
 
-const Page = () => {
+const Page = async ({ params }: apiProp) => {
+  const { id } = await params;
+  const movies = await UseApi(`/movies/${id}`);
+
   return (
     <div className=" flex justify-start relative bg-[#1A1A1D]">
       <Sidebar />
@@ -20,37 +27,45 @@ const Page = () => {
           <div className="mx-auto min-w-50 mb-6 lg:ml-8 w-50 aspect-2/3 rounded-2xl overflow-hidden">
             <img
               className="w-full h-full "
-              src="https://m.media-amazon.com/images/M/MV5BZDA0OGQxNTItMDZkMC00N2UyLTg3MzMtYTJmNjg3Nzk5MzRiXkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_QL75_UY281_CR0,0,190,281_.jpg"
+              src={movies?.imageLink}
               alt="Post Image"
             />
           </div>
           <div>
             <div className="flex flex-col gap-2">
-              <h1 className="text-3xl text-white font-bold">Movie Title</h1>
-              <span className="text-sm text-white/60">Movie Director</span>
-              <span className="text-sm text-white/60">Movie Tagline</span>
+              <h1 className="text-3xl sm:text-4xl text-white font-bold">
+                {movies?.title}
+              </h1>
+              <span className="text-sm sm:text-lg text-white/60">
+                {movies?.director}
+              </span>
+              <span className="text-sm sm:text-lg text-white/60">
+                {movies?.tagLine}
+              </span>
             </div>
             <div className="my-6 py-4 border-t border-b border-white/10">
               <div className="flex flex-col gap-3">
-                <div className="flex gap-20">
-                  <div className="flex items-center gap-1 text-md text-yellow-500 font-medium">
+                <div className="flex gap-5 sm:gap-25 max-w-87">
+                  <div className="flex w-[50%] items-center gap-1 text-md text-yellow-500 font-medium">
                     <FaStar />
-                    <span>Rating</span>
+                    <span>{movies?.rating} / 10</span>
                   </div>
-                  <div className="flex items-center gap-1 text-md text-white">
+                  <div className="flex w-[50%] items-center gap-1 text-md text-white">
                     <FaRegClock />
-                    <span>120 min</span>
+                    <span>20:21</span>
                   </div>
                 </div>
 
-                <div className="flex gap-20">
-                  <div className="flex items-center gap-1 text-md text-white">
+                <div className="flex gap-5 sm:gap-25 max-w-87">
+                  <div className="flex w-[50%] items-center gap-1 text-md text-white">
                     <FaMicrophone />
-                    <span>Rating</span>
+                    <span className="text-sm md:text-[12px]">
+                      Audio and text
+                    </span>
                   </div>
-                  <div className="flex items-center gap-1 text-md text-white">
+                  <div className="flex w-[50%] items-center gap-1 text-md text-white">
                     <FaCalendar />
-                    <span>Rating</span>
+                    <span>{movies?.releaseYear}</span>
                   </div>
                 </div>
               </div>
@@ -66,24 +81,19 @@ const Page = () => {
             <h2 className="mb-4 text-xl font-semibold">What's it about?</h2>
             <div className="flex gap-4 mb-6 items-center flex-wrap">
               <div className="h-12 flex px-4 border-white/60 border items-center bg-black/10 rounded-xl ">
-                Action
+                {movies?.tags[0]}
               </div>
               <div className="h-12 flex px-4 border-white/60 border items-center bg-black/10 rounded-xl ">
-                Action
+                {movies?.tags[1]}
               </div>
               <div className="h-12 flex px-4 border-white/60 border items-center bg-black/10 rounded-xl ">
-                Action
+                {movies?.tags[2]}
               </div>
               <div className="h-12 flex px-4 border-white/60 border items-center bg-black/10 rounded-xl ">
-                Action
+                {movies?.tags[3]}
               </div>
             </div>
-            <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-              Excepturi, nostrum odit! Quam adipisci amet numquam fugit et velit
-              aspernatur provident id esse, sit, quaerat, explicabo
-              reprehenderit similique beatae expedita modi!
-            </p>
+            <p>{movies?.movieDescription}</p>
           </div>
         </div>
       </div>
