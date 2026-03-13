@@ -80,16 +80,24 @@ const Page = async ({ params }: apiProp) => {
             </button>
             <h2 className="mb-4 text-xl font-semibold">What's it about?</h2>
             <div className="flex gap-4 mb-6 items-center flex-wrap">
-              <div className="h-12 flex px-4 border-white/60 border items-center bg-black/10 rounded-xl ">
+              <div
+                className={`${!movies?.tags[0] && "hidden"} h-12 flex px-4 border-white/60 border items-center bg-black/10 rounded-xl `}
+              >
                 {movies?.tags[0]}
               </div>
-              <div className="h-12 flex px-4 border-white/60 border items-center bg-black/10 rounded-xl ">
+              <div
+                className={`${!movies?.tags[1] && "hidden"} h-12 flex px-4 border-white/60 border items-center bg-black/10 rounded-xl `}
+              >
                 {movies?.tags[1]}
               </div>
-              <div className="h-12 flex px-4 border-white/60 border items-center bg-black/10 rounded-xl ">
+              <div
+                className={`${!movies?.tags[2] && "hidden"} h-12 flex px-4 border-white/60 border items-center bg-black/10 rounded-xl `}
+              >
                 {movies?.tags[2]}
               </div>
-              <div className="h-12 flex px-4 border-white/60 border items-center bg-black/10 rounded-xl ">
+              <div
+                className={`${!movies?.tags[3] && "hidden"} h-12 flex px-4 border-white/60 border items-center bg-black/10 rounded-xl `}
+              >
                 {movies?.tags[3]}
               </div>
             </div>

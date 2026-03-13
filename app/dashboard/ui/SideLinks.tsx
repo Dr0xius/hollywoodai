@@ -1,19 +1,21 @@
+"use client";
+
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
-import { MdOutlineDashboard } from "react-icons/md";
-import { IoIosBookmark, IoMdExit } from "react-icons/io";
-import { FaArrowTrendUp } from "react-icons/fa6";
-import { FaCog, FaSearch, FaTools } from "react-icons/fa";
 import { SidebarLinks } from "@/types";
+import UseAuth from "@/hooks/useAuth";
 
 interface SidebarLink {
   link: SidebarLinks;
 }
 
 const SideLinks = ({ link }: SidebarLink) => {
+  const { handleSignOut } = UseAuth();
   return link.cursor ? (
     <Link
+      onClick={() => {
+        link.label === "Log out" && handleSignOut();
+      }}
       href={`${link.link}`}
       className="flex gap-2 hover:bg-blue-400/10 hover:text-blue-100 px-2 py-1 
               rounded-2xl items-center transition "

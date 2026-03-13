@@ -23,6 +23,10 @@
   }
 }
 
+body {
+  background-color: white;
+}
+
 button {
   cursor: pointer;
   outline: none;
