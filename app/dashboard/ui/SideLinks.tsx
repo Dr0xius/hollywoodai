@@ -1,11 +1,7 @@
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
-import { MdOutlineDashboard } from "react-icons/md";
-import { IoIosBookmark, IoMdExit } from "react-icons/io";
-import { FaArrowTrendUp } from "react-icons/fa6";
-import { FaCog, FaSearch, FaTools } from "react-icons/fa";
 import { SidebarLinks } from "@/types";
+import UseAuth from "@/hooks/useAuth";
 
 interface SidebarLink {
   link: SidebarLinks;
