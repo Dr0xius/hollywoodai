@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import CheckLogged from "./modals/checkLogged";
 import Link from "next/link";
+import SignInButton from "./SignInButton";
+import SignInModal from "./modals/SignInModal";
 
 const Navbar = () => {
   return (
@@ -31,7 +33,8 @@ const Navbar = () => {
           Privacy policy
         </a>
       </div>
-      <CheckLogged />
+      <SignInButton />
+      <SignInModal />
     </nav>
   );
 };

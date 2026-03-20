@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import { Modal } from "@mui/material";
-import UseAuth from "@/hooks/useAuth";
 import {
   closeForgotPassModal,
   closeSignInModal,
