@@ -10,6 +10,9 @@ import {
   FaStar,
 } from "react-icons/fa";
 import { UseApi } from "@/hooks/useApi";
+import SummarizeButton from "./components/SummarizeButton";
+import SignInModal from "@/components/modals/SignInModal";
+import FavoritesButton from "./components/FavoritesButton";
 interface apiProp {
   params: Promise<{ id: string }>;
 }
@@ -21,6 +24,7 @@ const Page = async ({ params }: apiProp) => {
   return (
     <div className=" flex justify-start relative bg-[#1A1A1D]">
       <Sidebar />
+      <SignInModal />
       <div className="flex min-w-0 flex-col justify-start min-h-screen w-full md:ml-56 bg-[#1A1A1D] text-white">
         <Searchbar />
         <div className="pt-6 px-8 items-start mx-auto w-full h-full max-w-384 flex flex-col lg:flex-row-reverse">
@@ -70,14 +74,8 @@ const Page = async ({ params }: apiProp) => {
                 </div>
               </div>
             </div>
-            <button className="flex mb-6 items-center justify-center rounded-xl gap-2 bg-purple-950 h-12 max-w-70 w-full">
-              <span>Summarize</span>
-              <FaBolt />
-            </button>
-            <button className="flex mb-8 items-center gap-2 text-blue-300">
-              <FaRegBookmark />
-              <span>Add to Favorites</span>
-            </button>
+            <SummarizeButton movieId={id} />
+            <FavoritesButton />
             <h2 className="mb-4 text-xl font-semibold">What's it about?</h2>
             <div className="flex gap-4 mb-6 items-center flex-wrap">
               <div

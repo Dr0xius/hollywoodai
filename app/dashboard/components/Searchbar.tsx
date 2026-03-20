@@ -1,5 +1,6 @@
 import React from "react";
 import { FaBars, FaSearch } from "react-icons/fa";
+import MobileMenu from "./MobileMenu";
 
 const Searchbar = () => {
   return (
@@ -16,9 +17,10 @@ const Searchbar = () => {
             className="outline-none w-full px-4 py-2"
           />
         </div>
-        <div className="pl-3">
+        {/* <div className="pl-3">
           <FaBars className="text-2xl md:hidden" />
-        </div>
+        </div> */}
+        <MobileMenu />
       </div>
     </div>
   );

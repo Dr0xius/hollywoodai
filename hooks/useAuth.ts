@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import {
   signOut,
@@ -15,7 +16,7 @@ import { closeSignInModal } from "@/redux/slices/modalSlice";
 import { signInUser } from "@/redux/slices/userSlice";
 import { useRouter } from "next/navigation";
 
-const UseAuth = () => {
+const useAuth = () => {
   const dispatch: AppDispatch = useDispatch();
   const [loading2, setLoading2] = useState(false);
   const router = useRouter();
@@ -117,4 +118,4 @@ const UseAuth = () => {
   };
 };
 
-export default UseAuth;
+export default useAuth;

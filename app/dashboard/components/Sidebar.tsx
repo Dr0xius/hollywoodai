@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,8 +8,10 @@ import { FaArrowTrendUp } from "react-icons/fa6";
 import { FaCog, FaRegBookmark, FaSearch, FaTools } from "react-icons/fa";
 import SideLinks from "../ui/SideLinks";
 import { SidebarLinks } from "@/types";
+import useAuth from "@/hooks/useAuth";
 
 const Sidebar = () => {
+  const { handleSignOut } = useAuth();
   const sidebarLinks: SidebarLinks[] = [
     {
       label: "Dashboard",
@@ -46,7 +49,6 @@ const Sidebar = () => {
     {
       label: "Log out",
       icon: <IoMdExit />,
-      link: "/",
       cursor: true,
     },
   ];
@@ -63,15 +65,23 @@ const Sidebar = () => {
 
         <ul className="list-none flex flex-col gap-3 mt-10 w-full">
           <h3 className="text-[12px]">LINKS</h3>
-          {sidebarLinks.slice(0, 4).map((link, index) => (
-            <SideLinks key={index} link={link} />
+          {sidebarLinks.slice(0, 4).map((link) => (
+            <SideLinks
+              key={link.label}
+              link={link}
+              handleSignOut={handleSignOut}
+            />
           ))}
         </ul>
 
         <ul className="list-none flex flex-col gap-3 mt-10 w-full">
           <h3 className="text-[12px]">EXTRAS</h3>
-          {sidebarLinks.slice(4).map((link, index) => (
-            <SideLinks key={index} link={link} />
+          {sidebarLinks.slice(4).map((link) => (
+            <SideLinks
+              key={link.label}
+              link={link}
+              handleSignOut={handleSignOut}
+            />
           ))}
         </ul>
       </div>

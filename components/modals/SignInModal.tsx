@@ -29,12 +29,12 @@ const SignInModal = () => {
 
   return (
     <>
-      <button
+      {/* <button
         className={`nav__button`}
         onClick={() => dispatch(openSignInModal())}
       >
         Sign In
-      </button>
+      </button> */}
 
       <Modal
         open={isOpen}
@@ -70,7 +70,10 @@ const SignInModal = () => {
                 className="border-3 border-gray-200 rounded-xl 
               px-5 py-3 text-sm text-left flex gap-3 items-center
                text-[#404654] font-semibold hover:bg-black/10"
-                onClick={() => handleSignIn("john@gmail.com", "676767")}
+                onClick={() => {
+                  handleSignIn("john@gmail.com", "676767");
+                  dispatch(closeSignInModal());
+                }}
               >
                 <UserIcon className="w-4" />
                 <span>Login as Guest</span>
