@@ -27,7 +27,7 @@ const Page = async ({ params }: apiProp) => {
       <SignInModal />
       <div className="flex min-w-0 flex-col justify-start min-h-screen w-full md:ml-56 bg-[#1A1A1D] text-white">
         <Searchbar />
-        <div className="pt-6 px-8 items-start mx-auto w-full h-full max-w-384 flex flex-col lg:flex-row-reverse">
+        <div className="py-6 px-8 items-start mx-auto w-full h-full max-w-384 flex flex-col lg:flex-row-reverse">
           <div className="mx-auto min-w-50 mb-6 lg:ml-8 w-50 aspect-2/3 rounded-2xl overflow-hidden">
             <img
               className="w-full h-full "

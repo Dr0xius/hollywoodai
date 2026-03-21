@@ -63,7 +63,7 @@ const Sidebar = () => {
           className="w-[140] h-10"
         />
 
-        <ul className="list-none flex flex-col gap-3 mt-10 w-full">
+        <ul className="list-none flex flex-col gap-2 mt-10 w-full">
           <h3 className="text-[12px]">LINKS</h3>
           {sidebarLinks.slice(0, 4).map((link) => (
             <SideLinks
@@ -74,7 +74,7 @@ const Sidebar = () => {
           ))}
         </ul>
 
-        <ul className="list-none flex flex-col gap-3 mt-10 w-full">
+        <ul className="list-none flex flex-col gap-2 mt-10 w-full">
           <h3 className="text-[12px]">EXTRAS</h3>
           {sidebarLinks.slice(4).map((link) => (
             <SideLinks
