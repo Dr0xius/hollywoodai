@@ -6,6 +6,7 @@ interface authState {
   email: string | null;
   uid: string;
   loading: boolean;
+  isPremium: boolean;
 }
 
 const initialState: authState = {
@@ -14,6 +15,7 @@ const initialState: authState = {
   email: "",
   uid: "",
   loading: true,
+  isPremium: false,
 };
 
 const userSlice = createSlice({
@@ -26,6 +28,7 @@ const userSlice = createSlice({
       state.email = action.payload.email;
       state.uid = action.payload.uid;
       state.loading = action.payload.loading;
+      state.isPremium = action.payload.isPremium;
     },
 
     signOutUser: (state) => {
@@ -34,6 +37,7 @@ const userSlice = createSlice({
       state.email = "";
       state.uid = "";
       state.loading = false;
+      state.isPremium = false;
     },
   },
 });

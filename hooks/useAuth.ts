@@ -15,6 +15,7 @@ import { signOutUser } from "@/redux/slices/userSlice";
 import { closeSignInModal } from "@/redux/slices/modalSlice";
 import { signInUser } from "@/redux/slices/userSlice";
 import { useRouter } from "next/navigation";
+import { createCheckoutSession } from "@/services/stripe";
 
 const useAuth = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -23,6 +24,7 @@ const useAuth = () => {
   const [error, setError] = useState(null);
   const [feedback, setFeedback] = useState("");
   const [authenticated, setAuthenticated] = useState(false);
+  const [isSubscribing, setIsSubscribing] = useState(false);
 
   async function handleSignUp(email: string, password: string) {
     setLoading2(true);
@@ -105,16 +107,29 @@ const useAuth = () => {
     }
   }
 
+  const handleCheckout = async (priceId: string) => {
+    setIsSubscribing(true);
+    try {
+      await createCheckoutSession(priceId);
+    } catch (error: any) {
+      console.error("Stripe Error:", error.message);
+    } finally {
+      setIsSubscribing(false);
+    }
+  };
+
   return {
     handleSignOut,
     handleSignIn,
     handleGoogleSignIn,
     handleSignUp,
     handleForgotPassword,
+    handleCheckout,
     loading2,
     error,
     feedback,
     authenticated,
+    isSubscribing,
   };
 };
 

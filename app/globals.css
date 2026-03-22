@@ -23,6 +23,11 @@
   }
 }
 
+img.dark-mode-illustration {
+  background-color: transparent !important; /* Ensure the image bg is clear */
+  filter: invert(1) hue-rotate(180deg);
+}
+
 body {
   background-color: white;
 }
