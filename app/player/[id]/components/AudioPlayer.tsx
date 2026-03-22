@@ -1,37 +1,143 @@
 "use client";
-import { useState } from "react";
-import { RiMenuAddLine } from "react-icons/ri";
-import TrackInfo from "./TrackInfo";
-import Controls from "./Controls";
-import ProgressBar from "./ProgressBar";
-import VolumeControl from "./VolumeControl";
-import PlayList from "./PlayList";
-export const AudioPlayer = () => {
-  const [openDrawer, setOpenDrawer] = useState(false);
+
+import React, { useState, useRef, useEffect } from "react";
+import { FaPlay, FaPause, FaStepForward, FaStepBackward } from "react-icons/fa";
+
+interface BottomPlayerProps {
+  src: string; // Ensure this is the FULL URL (Domain + Filename)
+  title: string;
+  author: string;
+  poster: string;
+}
+
+const BottomPlayer = ({ src, title, author, poster }: BottomPlayerProps) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  // 1. Play/Pause Logic
+  const togglePlay = async () => {
+    if (!audioRef.current) return;
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      try {
+        await audioRef.current.play();
+      } catch (err) {
+        console.error("Playback failed. Check if the URL is correct:", src);
+      }
+    }
+    setIsPlaying(!isPlaying);
+  };
+
+  // 2. Skip Logic (10 seconds)
+  const skip = (amount: number) => {
+    if (audioRef.current) {
+      audioRef.current.currentTime += amount;
+    }
+  };
+
+  // 3. Seek Logic (Draggable bar)
+  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const targetTime = Number(e.target.value);
+    setCurrentTime(targetTime);
+    if (audioRef.current) {
+      audioRef.current.currentTime = targetTime;
+    }
+  };
+
+  // 4. Time Syncing
+  const handleTimeUpdate = () => {
+    setCurrentTime(audioRef.current?.currentTime || 0);
+  };
+
+  const onLoadedMetadata = () => {
+    setDuration(audioRef.current?.duration || 0);
+  };
+
+  // 5. Formatting (e.g., 600s -> 10:00)
+  const formatTime = (time: number) => {
+    if (isNaN(time)) return "0:00";
+    const min = Math.floor(time / 60);
+    const sec = Math.floor(time % 60);
+    return `${min}:${sec < 10 ? "0" : ""}${sec}`;
+  };
+
   return (
-    <div>
-      <div className="min-h-8 bg-[#2e2d2d] flex flex-col gap-9 lg:flex-row justify-between items-center text-white p-[0.5rem_10px]">
-        <TrackInfo />
-        <div className="w-full flex flex-col items-center gap-1 m-auto flex-1">
-          <Controls />
-          <ProgressBar />
-        </div>
-        <div className="flex items-center gap-2 text-gray-400">
-          <VolumeControl />
-          <button onClick={() => setOpenDrawer((prev) => !prev)}>
-            <RiMenuAddLine />
-          </button>
+    <div className="fixed bottom-0 gap-4 left-0 right-0 max-h-100 bg-[#0f0f0f] border-t border-white/10 p-4 md:px-8 flex flex-col sm:flex-row items-center justify-center z-50">
+      <audio
+        ref={audioRef}
+        src={src}
+        onTimeUpdate={handleTimeUpdate}
+        onLoadedMetadata={onLoadedMetadata}
+        onEnded={() => setIsPlaying(false)}
+      />
+
+      {/* LEFT: Movie Info */}
+      <div className="flex w-50 items-center justify-center gap-4">
+        <img
+          src={poster}
+          alt={title}
+          className="w-12 h-12 rounded object-cover"
+        />
+        <div className=" truncate">
+          <h4 className="text-white text-sm font-bold truncate">{title}</h4>
+          <p className="text-gray-400 text-xs">{author}</p>
         </div>
       </div>
-      <div
-        className={`transition-max-height duration-300 ease-in-out overflow-hidden ${
-          openDrawer ? "max-h-72" : "max-h-0"
-        }`}
-      >
-        <div className="bg-[#4c4848] text-white max-h-72 overflow-y-auto">
-          <PlayList />
+
+      {/* CENTER: Controls & Progress */}
+      <div className="flex flex-col items-center w-full justify-center gap-2 flex-1 max-w-150 px-4">
+        <div className="flex items-center gap-8 text-white">
+          <button
+            onClick={() => skip(-10)}
+            className="hover:text-blue-400 transition cursor-pointer"
+          >
+            <FaStepBackward size={18} />
+          </button>
+
+          <button
+            onClick={togglePlay}
+            className="w-11 h-11 bg-white text-black rounded-full flex items-center justify-center hover:scale-105 transition"
+          >
+            {isPlaying ? (
+              <FaPause size={18} />
+            ) : (
+              <FaPlay size={18} className="ml-1" />
+            )}
+          </button>
+
+          <button
+            onClick={() => skip(10)}
+            className="hover:text-blue-400 transition cursor-pointer"
+          >
+            <FaStepForward size={18} />
+          </button>
+        </div>
+
+        {/* Progress Bar Container */}
+        <div className="w-full flex items-center gap-3">
+          <span className="text-[11px] text-gray-400 w-8">
+            {formatTime(currentTime)}
+          </span>
+
+          <input
+            type="range"
+            min="0"
+            max={duration || 0}
+            value={currentTime}
+            onChange={handleSeek}
+            className="flex-1 h-1 bg-white/20 rounded-full cursor-pointer accent-white hover:accent-blue-400 transition-all"
+          />
+
+          <span className="text-[11px] text-gray-400 w-8 text-right">
+            {formatTime(duration)}
+          </span>
         </div>
       </div>
     </div>
   );
 };
+
+export default BottomPlayer;

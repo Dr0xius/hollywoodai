@@ -9,7 +9,7 @@ import {
   FaRegClock,
   FaStar,
 } from "react-icons/fa";
-import { UseApi } from "@/hooks/useApi";
+import { useApi } from "@/hooks/useApi";
 import SummarizeButton from "./components/SummarizeButton";
 import SignInModal from "@/components/modals/SignInModal";
 import FavoritesButton from "./components/FavoritesButton";
@@ -19,7 +19,7 @@ interface apiProp {
 
 const Page = async ({ params }: apiProp) => {
   const { id } = await params;
-  const movies = await UseApi(`/movies/${id}`);
+  const movies = await useApi(`/movies/${id}`);
 
   return (
     <div className=" flex justify-start relative bg-[#1A1A1D]">

@@ -2,7 +2,7 @@ import React from "react";
 
 const baseURL = "https://advanced-internship-api-production.up.railway.app";
 
-export async function UseApi(path: string) {
+export async function useApi(path: string) {
   try {
     const response = await fetch(`${baseURL}${path}`, {
       // next: { revalidate: 3600 },
