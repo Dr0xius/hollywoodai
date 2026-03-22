@@ -1,10 +1,10 @@
 import React from "react";
 import MovieCard from "../ui/MovieCard";
 import Carousel from "../ui/Carousel";
-import { UseApi } from "@/hooks/useApi";
+import { useApi } from "@/hooks/useApi";
 
 const TopMovies = async () => {
-  const movies = await UseApi("/topMovies");
+  const movies = await useApi("/topMovies");
   return (
     <div className="pt-3 sm:pt-6 pb-10 px-4 sm:px-8 mx-auto w-full h-full max-w-384">
       <h1 className="text-lg font-bold">Top Movies</h1>
