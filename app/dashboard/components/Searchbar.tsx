@@ -6,10 +6,7 @@ const Searchbar = () => {
   return (
     <div className="h-20 p-2 w-full mx-auto border-b border-white/10">
       <div className="px-8 flex w-full h-full justify-between max-w-[1400] items-center m-0">
-        <div
-          className="flex gap-2 w-full max-w-100 items-center h-11
-       bg-black/25 rounded-full relative"
-        >
+        <div className="flex gap-2 w-full max-w-100 items-center h-11 bg-black/25 rounded-full relative">
           <FaSearch className="relative left-4" />
           <input
             type="text"

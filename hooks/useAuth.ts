@@ -14,7 +14,7 @@ import { AppDispatch } from "@/redux/store";
 import { signOutUser } from "@/redux/slices/userSlice";
 import { closeSignInModal } from "@/redux/slices/modalSlice";
 import { signInUser } from "@/redux/slices/userSlice";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { createCheckoutSession } from "@/services/stripe";
 
 const useAuth = () => {
@@ -25,6 +25,13 @@ const useAuth = () => {
   const [feedback, setFeedback] = useState("");
   const [authenticated, setAuthenticated] = useState(false);
   const [isSubscribing, setIsSubscribing] = useState(false);
+  const pathName = usePathname();
+
+  const redirect = (defaultRoute: string) => {
+    if (pathName === "/") {
+      router.push(`/${defaultRoute}`);
+    }
+  };
 
   async function handleSignUp(email: string, password: string) {
     setLoading2(true);
@@ -43,7 +50,7 @@ const useAuth = () => {
           uid: userCredentials.user.uid,
         }),
       );
-      router.push("/dashboard");
+      redirect("dashboard");
       setAuthenticated(true);
     } catch (error: any) {
       setError(error.toString());
@@ -72,7 +79,7 @@ const useAuth = () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       setAuthenticated(true);
-      router.push("/dashboard");
+      redirect("dashboard");
     } catch (error: any) {
       setError(error.toString());
     } finally {
@@ -87,7 +94,7 @@ const useAuth = () => {
       await signInWithPopup(auth, provider);
       dispatch(closeSignInModal());
       setAuthenticated(true);
-      router.push("/dashboard");
+      redirect("dashboard");
     } catch (error: any) {
       setError(error.toString());
     } finally {

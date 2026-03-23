@@ -7,6 +7,7 @@ interface authState {
   uid: string;
   loading: boolean;
   isPremium: boolean;
+  subTier: string;
 }
 
 const initialState: authState = {
@@ -16,6 +17,7 @@ const initialState: authState = {
   uid: "",
   loading: true,
   isPremium: false,
+  subTier: "basic",
 };
 
 const userSlice = createSlice({
@@ -29,6 +31,7 @@ const userSlice = createSlice({
       state.uid = action.payload.uid;
       state.loading = action.payload.loading;
       state.isPremium = action.payload.isPremium;
+      state.subTier = action.payload.subTier;
     },
 
     signOutUser: (state) => {
@@ -38,6 +41,7 @@ const userSlice = createSlice({
       state.uid = "";
       state.loading = false;
       state.isPremium = false;
+      state.subTier = "basic";
     },
   },
 });

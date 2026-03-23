@@ -4,7 +4,6 @@ import SelectedMovies from "./components/SelectedMovies";
 import TopMovies from "./components/TopMovies";
 import Searchbar from "./components/Searchbar";
 import Header from "./components/Header";
-import SignInModal from "@/components/modals/SignInModal";
 
 const Page = async () => {
   return (
@@ -15,7 +14,6 @@ const Page = async () => {
         <Header />
         <SelectedMovies />
         <TopMovies />
-        <SignInModal />
       </div>
     </div>
   );
