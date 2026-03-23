@@ -4,12 +4,16 @@ import { FaRegClock, FaRegStar, FaStar } from "react-icons/fa";
 import { MovieProps } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/redux/store";
 
 interface MovieCardProps {
   movie: MovieProps;
 }
 
 const MovieCard = ({ movie }: MovieCardProps) => {
+  const dispatch: AppDispatch = useDispatch();
+  const isPremium = useSelector((state: RootState) => state.user.isPremium);
   return (
     <Link href={`/movie/${movie.id}`}>
       <div className="w-full bg-black/10 overflow-hidden rounded-xl">
@@ -20,7 +24,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
             className="object-cover w-full h-full"
           />
           <div
-            className={`block ${!movie.subscriptionRequired && "hidden"} absolute top-2 right-2 bg-purple-600 text-[10px] px-2 py-0.5 rounded-full text-white font-bold shadow-lg`}
+            className={`${!movie.subscriptionRequired || isPremium ? "hidden" : "block"} absolute top-2 right-2 bg-purple-600 text-[10px] px-2 py-0.5 rounded-full text-white font-bold shadow-lg`}
           >
             PREMIUM
           </div>

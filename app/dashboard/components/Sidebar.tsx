@@ -9,6 +9,7 @@ import { FaCog, FaRegBookmark, FaSearch, FaTools } from "react-icons/fa";
 import SideLinks from "../ui/SideLinks";
 import { SidebarLinks } from "@/types";
 import useAuth from "@/hooks/useAuth";
+import SignInModal from "@/components/modals/SignInModal";
 
 const Sidebar = () => {
   const { handleSignOut } = useAuth();
@@ -85,6 +86,7 @@ const Sidebar = () => {
           ))}
         </ul>
       </div>
+      <SignInModal />
     </aside>
   );
 };
