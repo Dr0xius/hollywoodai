@@ -69,7 +69,7 @@ const MobileMenu = () => {
     <div className="md:hidden">
       <button
         onClick={() => setIsOpen(true)}
-        className="p-4 text-white focus:outline-none"
+        className="pl-4 text-white focus:outline-none"
       >
         <FaBars size={24} />
       </button>
