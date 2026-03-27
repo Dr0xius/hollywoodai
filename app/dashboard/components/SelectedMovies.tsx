@@ -1,5 +1,4 @@
 import React from "react";
-import MovieCard from "../ui/MovieCard";
 import Carousel from "../ui/Carousel";
 import { useApi } from "@/hooks/useApi";
 

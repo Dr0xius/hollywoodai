@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { FaSearch, FaRegClock } from "react-icons/fa";
 import { useDebounce } from "use-debounce";
 import MobileMenu from "./MobileMenu";
@@ -12,7 +12,6 @@ const Searchbar = () => {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [debouncedQuery] = useDebounce(query, 500);
-  const searchRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -28,7 +27,6 @@ const Searchbar = () => {
         );
         const data = await response.json();
         setResults(data.data || []);
-        console.log("Search Data:", data);
       } catch (error) {
         console.error("Search error:", error);
       } finally {
@@ -39,51 +37,31 @@ const Searchbar = () => {
     fetchMovies();
   }, [debouncedQuery]);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        searchRef.current &&
-        !searchRef.current.contains(event.target as Node)
-      ) {
-        setResults([]);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
   return (
-    <div className="h-20 p-4 w-full mx-auto border-b border-white/10 relative z-50">
-      <div className=" flex w-full h-full justify-between max-w-350 items-center mx-auto">
-        <div
-          ref={searchRef}
-          className="flex gap-2 w-full max-w-md items-center h-11 bg-black/25 rounded-full relative"
-        >
-          <FaSearch className="absolute left-4 text-white/40" />
+    <div className="h-20 py-4 px-8 w-full border-b  border-white/10 relative z-50">
+      <div className="flex w-full h-full justify-between mx-auto max-w-368 items-center">
+        <div className="flex gap-2 w-full max-w-100 items-center h-11 bg-white/5 border border-white/10 backdrop-blur-xl focus-within:border-purple-500/50 focus-within:bg-white/10 transition-all duration-300 rounded-full relative">
+          <FaSearch className="absolute left-2 text-white/40" />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search for movies..."
-            className="outline-none w-full px-12 py-2 bg-transparent text-white placeholder:text-white/40"
+            className="outline-none w-full pl-8 pr-6 py-2 bg-transparent text-white placeholder:text-white/40"
           />
 
-          {/* The Results Window Container */}
           {debouncedQuery && results && (
-            <div className="absolute top-[115%] left-0 w-full bg-[#121214] border border-white/20 rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.7)] z-100 overflow-hidden flex flex-col">
-              {/* Header / Loading State */}
+            <div className="absolute top-[115%] left-0 w-full bg-[#121214] border  border-white/20 rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.7)] z-100 overflow-hidden flex flex-col">
               <div className="p-4 bg-white/5 border-b border-white/5 text-[10px] uppercase tracking-tighter font-bold text-white/30">
                 {loading
-                  ? "Searching Database..."
+                  ? "Searching Movies..."
                   : `Search Results for "${debouncedQuery}"`}
               </div>
 
               <div className="max-h-100 overflow-y-auto custom-scrollbar">
                 {loading ? (
-                  // Simple Loading Spinner or Skeleton
                   <SearchSkeleton />
                 ) : results.length > 0 ? (
-                  // Actual Results
                   results.map((movie: any) => (
                     <Link
                       key={movie.id}
@@ -114,7 +92,6 @@ const Searchbar = () => {
                     </Link>
                   ))
                 ) : (
-                  // 🛑 THE "NO RESULTS" STATE
                   <div className="p-10 flex flex-col items-center justify-center text-center gap-2">
                     <span className="text-4xl">🎬</span>
                     <p className="text-sm font-medium text-white/60">

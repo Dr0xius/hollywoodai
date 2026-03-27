@@ -17,10 +17,6 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import useAuth from "@/hooks/useAuth";
 
-interface SidebarLink {
-  link: SidebarLinks;
-}
-
 const sidebarLinks: SidebarLinks[] = [
   {
     label: "Dashboard",
@@ -136,53 +132,6 @@ const MobileMenu = () => {
           </>
         )}
       </AnimatePresence>
-      {/* {isOpen && (
-        <div className="fixed inset-0 z-100 flex">
-          <div
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm"
-            onClick={() => setIsOpen(false)}
-          />
-
-          <div className="relative w-56 max-w-[80%] bg-[#1A1A1D] h-full p-3 shadow-xl">
-            <button
-              onClick={() => setIsOpen(false)}
-              className="absolute top-4 right-4 text-white/60"
-            >
-              <FaTimes size={20} />
-            </button>
-
-            <Image
-              src="/assets/logo-light.png"
-              width={140}
-              height={40}
-              alt="Logo"
-              className="w-[140] h-10"
-            />
-
-            <div className="mt-10 text-white flex flex-col gap-3 w-full">
-              <h3 className="text-[12px]">LINKS</h3>
-              {sidebarLinks.slice(0, 4).map((link, index) => (
-                <SideLinks
-                  key={index}
-                  link={link}
-                  onClick={() => setIsOpen(false)}
-                />
-              ))}
-            </div>
-
-            <div className="mt-10 text-white flex flex-col gap-3 w-full">
-              <h3 className="text-[12px]">EXTRAS</h3>
-              {sidebarLinks.slice(4).map((link, index) => (
-                <SideLinks
-                  key={index}
-                  link={link}
-                  onClick={() => setIsOpen(false)}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      )} */}
     </div>
   );
 };

@@ -14,7 +14,7 @@ const Page = async ({ params }: apiProp) => {
   return (
     <div className=" flex justify-start relative bg-[#1A1A1D]">
       <Sidebar />
-      <div className="flex min-w-0 flex-col justify-center min-h-screen w-full md:ml-56 w-max-400 bg-[#1A1A1D] text-white">
+      <div className="flex min-w-0 flex-col justify-center min-h-screen w-full md:ml-56 w-max-400 bg-[#0D0D10] text-white">
         <Searchbar />
         <div className="pt-6 pb-50 px-4 items-start mx-auto w-full h-full max-w-384 flex flex-col">
           <SummaryPage movie={movies} />

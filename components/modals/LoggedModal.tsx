@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
 import useAuth from "@/hooks/useAuth";
 import Link from "next/link";
-import { closeSignInModal } from "@/redux/slices/modalSlice";
 import { useRouter } from "next/navigation";
 
 interface MenuItems {
@@ -78,7 +77,6 @@ const LoggedModal = () => {
   }, []);
 
   const handleAction = (action: string) => {
-    console.log(`Triggering: ${action}`);
     if (action === "logout") {
       handleSignOut();
     }

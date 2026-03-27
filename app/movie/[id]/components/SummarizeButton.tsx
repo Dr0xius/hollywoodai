@@ -1,6 +1,6 @@
 "use client";
-import { AppDispatch, RootState } from "@/redux/store";
 import React from "react";
+import { AppDispatch, RootState } from "@/redux/store";
 import { FaBolt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { openSignInModal } from "@/redux/slices/modalSlice";
@@ -29,7 +29,7 @@ const SummarizeButton = ({ movieId, subRequired }: SummarizeButtonProps) => {
   return (
     <button
       onClick={handleClick}
-      className="flex mb-6 items-center justify-center rounded-xl gap-2 bg-purple-950 h-12 max-w-70 w-full"
+      className="flex mb-6 items-center justify-center rounded-xl gap-2 bg-linear-to-r from-violet-600 via-violet-800 to-violet-900 h-12 max-w-70 w-full"
     >
       <span>Summarize</span>
       <FaBolt />

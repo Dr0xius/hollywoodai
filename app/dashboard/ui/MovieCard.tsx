@@ -1,22 +1,20 @@
 "use client";
 
-import { FaRegClock, FaRegStar, FaStar } from "react-icons/fa";
+import { FaRegClock, FaStar } from "react-icons/fa";
 import { MovieProps } from "@/types";
-import Image from "next/image";
 import Link from "next/link";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/redux/store";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 interface MovieCardProps {
   movie: MovieProps;
 }
 
 const MovieCard = ({ movie }: MovieCardProps) => {
-  const dispatch: AppDispatch = useDispatch();
   const isPremium = useSelector((state: RootState) => state.user.isPremium);
   return (
     <Link href={`/movie/${movie.id}`}>
-      <div className="w-full bg-black/10 overflow-hidden rounded-xl">
+      <div className="w-full bg-white/5 max-w-67 backdrop-blur-md transition-all duration-300 ease-out border border-white/10 hover:bg-white/[0.07] hover:border-white/20 hover:scale-[1.01] hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] overflow-hidden rounded-xl">
         <div className="aspect-2/3 w-full relative bg-gray-400 rounded-xl">
           <img
             src={movie.imageLink}
@@ -24,7 +22,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
             className="object-cover w-full h-full"
           />
           <div
-            className={`${!movie.subscriptionRequired || isPremium ? "hidden" : "block"} absolute top-2 right-2 bg-purple-600 text-[10px] px-2 py-0.5 rounded-full text-white font-bold shadow-lg`}
+            className={`${!movie.subscriptionRequired || isPremium ? "hidden" : "block"} absolute top-2 right-2 bg-linear-to-r from-violet-600 via-violet-800 to-violet-900 text-[10px] font-bold tracking-wider text-white uppercase shadow-[0_0_15px_rgba(124,58,237,0.5)] border border-white/10 px-2 py-0.5 rounded-full`}
           >
             PREMIUM
           </div>
@@ -40,7 +38,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
           <div className="flex items-center gap-2 sm:gap-3 mt-1">
             <div className="flex items-center gap-1 text-[11px] text-white/60">
               <FaRegClock />
-              <span>120 min</span>
+              <span>N/A</span>
             </div>
             <div className="flex items-center gap-1 text-[11px] text-yellow-500 font-medium">
               <FaStar className="fill-current" />

@@ -27,7 +27,7 @@ const Carousel = ({ movies = [] }: Movies) => {
   return (
     <div className="embla">
       <div className="embla__viewport relative max-w-384 w-full" ref={emblaRef}>
-        <div className="embla__container flex">
+        <div className="embla__container flex items-center">
           {movies.map((movie) => (
             <div
               key={movie.id}

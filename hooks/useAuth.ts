@@ -16,6 +16,10 @@ import { closeSignInModal } from "@/redux/slices/modalSlice";
 import { signInUser } from "@/redux/slices/userSlice";
 import { usePathname, useRouter } from "next/navigation";
 import { createCheckoutSession } from "@/services/stripe";
+import { MovieProps } from "@/types";
+interface FavoriteProps {
+  movie: MovieProps;
+}
 
 const useAuth = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -48,6 +52,10 @@ const useAuth = () => {
           username: userCredentials.user.email!.split("@")[0],
           email: userCredentials.user.email,
           uid: userCredentials.user.uid,
+          loading: false,
+          isPremium: false,
+          subTier: false,
+          favorites: [] as MovieProps[],
         }),
       );
       redirect("dashboard");

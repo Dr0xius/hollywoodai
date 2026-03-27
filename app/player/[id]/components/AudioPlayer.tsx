@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { FaPlay, FaPause, FaStepForward, FaStepBackward } from "react-icons/fa";
 
 interface BottomPlayerProps {
-  src: string; // Ensure this is the FULL URL (Domain + Filename)
+  src: string;
   title: string;
   author: string;
   poster: string;
@@ -16,7 +16,6 @@ const BottomPlayer = ({ src, title, author, poster }: BottomPlayerProps) => {
   const [duration, setDuration] = useState(0);
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  // 1. Play/Pause Logic
   const togglePlay = async () => {
     if (!audioRef.current) return;
     if (isPlaying) {
@@ -31,14 +30,12 @@ const BottomPlayer = ({ src, title, author, poster }: BottomPlayerProps) => {
     setIsPlaying(!isPlaying);
   };
 
-  // 2. Skip Logic (10 seconds)
   const skip = (amount: number) => {
     if (audioRef.current) {
       audioRef.current.currentTime += amount;
     }
   };
 
-  // 3. Seek Logic (Draggable bar)
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
     const targetTime = Number(e.target.value);
     setCurrentTime(targetTime);
@@ -47,7 +44,6 @@ const BottomPlayer = ({ src, title, author, poster }: BottomPlayerProps) => {
     }
   };
 
-  // 4. Time Syncing
   const handleTimeUpdate = () => {
     setCurrentTime(audioRef.current?.currentTime || 0);
   };
@@ -56,7 +52,6 @@ const BottomPlayer = ({ src, title, author, poster }: BottomPlayerProps) => {
     setDuration(audioRef.current?.duration || 0);
   };
 
-  // 5. Formatting (e.g., 600s -> 10:00)
   const formatTime = (time: number) => {
     if (isNaN(time)) return "0:00";
     const min = Math.floor(time / 60);
@@ -74,7 +69,6 @@ const BottomPlayer = ({ src, title, author, poster }: BottomPlayerProps) => {
         onEnded={() => setIsPlaying(false)}
       />
 
-      {/* LEFT: Movie Info */}
       <div className="flex w-50 items-center justify-center gap-4">
         <img
           src={poster}
@@ -87,7 +81,6 @@ const BottomPlayer = ({ src, title, author, poster }: BottomPlayerProps) => {
         </div>
       </div>
 
-      {/* CENTER: Controls & Progress */}
       <div className="flex flex-col items-center w-full justify-center gap-2 flex-1 max-w-150 px-4">
         <div className="flex items-center gap-8 text-white">
           <button
@@ -116,7 +109,6 @@ const BottomPlayer = ({ src, title, author, poster }: BottomPlayerProps) => {
           </button>
         </div>
 
-        {/* Progress Bar Container */}
         <div className="w-full flex items-center gap-3">
           <span className="text-[11px] text-gray-400 w-8">
             {formatTime(currentTime)}
