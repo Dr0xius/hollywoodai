@@ -1,11 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Modal } from "@mui/material";
-import {
-  closeForgotPassModal,
-  closeSignInModal,
-  openForgotPassModal,
-} from "@/redux/slices/modalSlice";
+import { closeForgotPassModal } from "@/redux/slices/modalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
 import { XMarkIcon } from "@heroicons/react/24/solid";

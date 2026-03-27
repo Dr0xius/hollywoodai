@@ -55,7 +55,7 @@ const Plans = () => {
           {plans.map((plan, index) => (
             <div
               key={index}
-              className="flex-1 flex flex-col bg-[#121214] border border-white/40 rounded-4xl p-6 hover:border-blue-400/40 transition-all duration-300 shadow-xl"
+              className="flex-1 flex flex-col bg-[#121214] border border-white/40 rounded-4xl p-6 hover:border-violet-500 transition-all duration-300 shadow-xl"
             >
               <div className="flex justify-between items-start mb-2">
                 <div className="flex items-baseline">

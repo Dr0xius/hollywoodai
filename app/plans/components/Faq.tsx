@@ -50,7 +50,7 @@ export default function FAQAccordion() {
                 <span className="font-semibold text-sm sm:text-base pr-4">
                   {faq.question}
                 </span>
-                <div className="text-blue-400 shrink-0">
+                <div className="text-violet-400 shrink-0">
                   {isOpen ? <FaMinus size={14} /> : <FaPlus size={14} />}
                 </div>
               </button>

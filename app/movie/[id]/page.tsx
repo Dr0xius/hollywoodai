@@ -1,14 +1,7 @@
 import React from "react";
 import Sidebar from "@/app/dashboard/components/Sidebar";
 import Searchbar from "@/app/dashboard/components/Searchbar";
-import {
-  FaBolt,
-  FaCalendar,
-  FaMicrophone,
-  FaRegBookmark,
-  FaRegClock,
-  FaStar,
-} from "react-icons/fa";
+import { FaCalendar, FaMicrophone, FaRegClock, FaStar } from "react-icons/fa";
 import { useApi } from "@/hooks/useApi";
 import SummarizeButton from "./components/SummarizeButton";
 import FavoritesButton from "./components/FavoritesButton";
@@ -23,7 +16,7 @@ const Page = async ({ params }: apiProp) => {
   return (
     <div className=" flex justify-start relative bg-[#1A1A1D]">
       <Sidebar />
-      <div className="flex min-w-0 flex-col justify-start min-h-screen w-full md:ml-56 bg-[#1A1A1D] text-white">
+      <div className="flex min-w-0 flex-col justify-start min-h-screen w-full md:ml-56 bg-[#0D0D10] text-white">
         <Searchbar />
         <div className="py-6 px-8 items-start mx-auto w-full h-full max-w-384 flex flex-col lg:flex-row-reverse">
           <div className="mx-auto min-w-50 mb-6 lg:ml-8 w-50 aspect-2/3 rounded-2xl overflow-hidden">
@@ -35,7 +28,7 @@ const Page = async ({ params }: apiProp) => {
           </div>
           <div>
             <div className="flex flex-col gap-2">
-              <h1 className="text-3xl sm:text-4xl text-white font-bold">
+              <h1 className="text-3xl sm:text-4xl text-white font-extrabold">
                 {movies?.title}
               </h1>
               <span className="text-sm sm:text-lg text-white/60">
@@ -76,7 +69,7 @@ const Page = async ({ params }: apiProp) => {
               movieId={movies?.id}
               subRequired={movies?.subscriptionRequired}
             />
-            <FavoritesButton />
+            <FavoritesButton movie={movies ? movies : null} />
             <h2 className="mb-4 text-xl font-semibold">What's it about?</h2>
             <div className="flex gap-4 mb-6 items-center flex-wrap">
               <div

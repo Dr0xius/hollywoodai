@@ -1,9 +1,8 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { MdOutlineDashboard } from "react-icons/md";
-import { IoIosBookmark, IoMdExit } from "react-icons/io";
+import { IoMdExit } from "react-icons/io";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import { FaCog, FaRegBookmark, FaSearch, FaTools } from "react-icons/fa";
 import SideLinks from "../ui/SideLinks";

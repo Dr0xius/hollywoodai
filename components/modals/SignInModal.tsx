@@ -5,7 +5,6 @@ import { Modal } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
 import {
-  openSignInModal,
   closeSignInModal,
   openSignUpModal,
   openForgotPassModal,
@@ -13,29 +12,19 @@ import {
 import { UserIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { FaGoogle } from "react-icons/fa";
 import useAuth from "@/hooks/useAuth";
-import { useRouter } from "next/navigation";
 
 const SignInModal = () => {
   const [email, setEmail] = useState("");
-  const router = useRouter();
   const [password, setPassword] = useState("");
   const { handleSignIn, handleGoogleSignIn, authenticated, error } = useAuth();
   const isOpen = useSelector(
     (state: RootState) => state.modals.signInModalOpen,
   );
-  const user = useSelector((state: RootState) => state.user);
 
   const dispatch: AppDispatch = useDispatch();
 
   return (
     <>
-      {/* <button
-        className={`nav__button`}
-        onClick={() => dispatch(openSignInModal())}
-      >
-        Sign In
-      </button> */}
-
       <Modal
         open={isOpen}
         onClose={() => dispatch(closeSignInModal())}
