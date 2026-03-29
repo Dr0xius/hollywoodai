@@ -8,7 +8,7 @@ interface BottomPlayerProps {
   title: string;
   author: string;
   poster: string;
-  movieId: string;
+  movieId?: string;
 }
 
 const BottomPlayer = ({
