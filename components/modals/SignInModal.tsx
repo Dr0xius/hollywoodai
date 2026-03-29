@@ -79,8 +79,8 @@ const SignInModal = () => {
                 }}
               >
                 <UserIcon className="w-4" />
-                <span className={`${loadingSignIn && "animate-spin"}`}>
-                  {loadingSignIn ? <FaSpinner size={20} /> : "Login as Guest"}
+                <span className={`${loadingGuest && "animate-spin"}`}>
+                  {loadingGuest ? <FaSpinner size={20} /> : "Login as Guest"}
                 </span>
               </button>
             </div>
