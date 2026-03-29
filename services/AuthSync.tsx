@@ -2,12 +2,25 @@
 
 import React, { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { AppDispatch, RootState } from "@/redux/store";
-import { useDispatch, useSelector } from "react-redux";
-import { signInUser, signOutUser } from "@/redux/slices/userSlice";
+import { AppDispatch } from "@/redux/store";
+import { useDispatch } from "react-redux";
+import {
+  signInUser,
+  signOutUser,
+  setFavorites,
+} from "@/redux/slices/userSlice";
 import { auth, db } from "@/firebase";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  getDoc,
+  doc,
+  setDoc,
+} from "firebase/firestore";
 import { MovieProps } from "@/types";
+import Favorites from "@/app/favorites/components/Favorites";
 
 interface FavoritesProps {
   movie: MovieProps;
@@ -19,6 +32,7 @@ const STRIPE_PRICES = {
 };
 const AuthSync = () => {
   const dispatch: AppDispatch = useDispatch();
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (!currentUser) {
@@ -27,6 +41,24 @@ const AuthSync = () => {
       }
       let isPremium = false;
       let subTier = "basic";
+      let userFavorites = [];
+      if (currentUser) {
+        const userDoc = await getDoc(doc(db, "users", currentUser.uid));
+
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+
+          userFavorites = userData.favorites || [];
+        } else {
+          await setDoc(doc(db, "users", currentUser.uid), {
+            email: currentUser.email,
+            favorites: [],
+          });
+          dispatch(setFavorites([]));
+        }
+      } else {
+        dispatch(signOutUser());
+      }
       try {
         const subRef = collection(
           db,
@@ -53,6 +85,7 @@ const AuthSync = () => {
         console.error("Error fetching sub status:", err);
       }
 
+      dispatch(setFavorites(userFavorites));
       dispatch(
         signInUser({
           name: currentUser.displayName,
@@ -62,7 +95,7 @@ const AuthSync = () => {
           loading: false,
           isPremium: isPremium,
           subTier: subTier,
-          favorites: [] as MovieProps[],
+          favorites: userFavorites,
         }),
       );
     });

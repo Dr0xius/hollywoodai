@@ -6,6 +6,8 @@ import CheckLogged from "./modals/checkLogged";
 import Link from "next/link";
 import SignInButton from "./SignInButton";
 import SignInModal from "./modals/SignInModal";
+import SignUpModal from "./modals/SignUpModal";
+import ForgotPassModal from "./modals/ForgotPassModal";
 
 const Navbar = () => {
   return (
@@ -35,6 +37,8 @@ const Navbar = () => {
       </div>
       <SignInButton />
       <SignInModal />
+      <SignUpModal />
+      <ForgotPassModal />
     </nav>
   );
 };

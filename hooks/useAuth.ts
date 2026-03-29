@@ -12,7 +12,7 @@ import { auth } from "@/firebase";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import { signOutUser } from "@/redux/slices/userSlice";
-import { closeSignInModal } from "@/redux/slices/modalSlice";
+import { closeSignInModal, closeSignUpModal } from "@/redux/slices/modalSlice";
 import { signInUser } from "@/redux/slices/userSlice";
 import { usePathname, useRouter } from "next/navigation";
 import { createCheckoutSession } from "@/services/stripe";
@@ -23,7 +23,12 @@ interface FavoriteProps {
 
 const useAuth = () => {
   const dispatch: AppDispatch = useDispatch();
-  const [loading2, setLoading2] = useState(false);
+  const [loadingSignIn, setLoadingSignIn] = useState(false);
+  const [loadingSignUp, setLoadingSignUp] = useState(false);
+  const [loadingGoogle, setLoadingGoogle] = useState(false);
+  const [loadingGuest, setLoadingGuest] = useState(false);
+  const [loadingSignOut, setLoadingSignOut] = useState(false);
+  const [loadingForgotPass, setLoadingForgotPass] = useState(false);
   const router = useRouter();
   const [error, setError] = useState(null);
   const [feedback, setFeedback] = useState("");
@@ -38,7 +43,7 @@ const useAuth = () => {
   };
 
   async function handleSignUp(email: string, password: string) {
-    setLoading2(true);
+    setLoadingSignUp(true);
     try {
       const userCredentials = await createUserWithEmailAndPassword(
         auth,
@@ -58,67 +63,88 @@ const useAuth = () => {
           favorites: [] as MovieProps[],
         }),
       );
+      dispatch(closeSignUpModal());
+      dispatch(closeSignInModal());
       redirect("dashboard");
       setAuthenticated(true);
     } catch (error: any) {
       setError(error.toString());
     } finally {
-      setLoading2(false);
+      setLoadingSignUp(false);
     }
   }
 
   async function handleSignOut() {
-    setLoading2(true);
+    setLoadingSignOut(true);
     try {
       await signOut(auth);
 
       dispatch(signOutUser());
+      dispatch(closeSignUpModal());
       dispatch(closeSignInModal());
       setAuthenticated(false);
     } catch (error: any) {
       setError(error.toString());
     } finally {
-      setLoading2(false);
+      setLoadingSignOut(false);
     }
   }
 
   async function handleSignIn(email: string, password: string) {
-    setLoading2(true);
+    setLoadingSignIn(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      setAuthenticated(true);
-      redirect("dashboard");
-    } catch (error: any) {
-      setError(error.toString());
-    } finally {
-      setLoading2(false);
-    }
-  }
-
-  async function handleGoogleSignIn() {
-    const provider = new GoogleAuthProvider();
-    setLoading2(true);
-    try {
-      await signInWithPopup(auth, provider);
+      dispatch(closeSignUpModal());
       dispatch(closeSignInModal());
       setAuthenticated(true);
       redirect("dashboard");
     } catch (error: any) {
       setError(error.toString());
     } finally {
-      setLoading2(false);
+      setLoadingSignIn(false);
+    }
+  }
+
+  async function handleGuestSignIn(email: string, password: string) {
+    setLoadingGuest(true);
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      dispatch(closeSignUpModal());
+      dispatch(closeSignInModal());
+      setAuthenticated(true);
+      redirect("dashboard");
+    } catch (error: any) {
+      setError(error.toString());
+    } finally {
+      setLoadingGoogle(false);
+    }
+  }
+
+  async function handleGoogleSignIn() {
+    const provider = new GoogleAuthProvider();
+    setLoadingGoogle(true);
+    try {
+      await signInWithPopup(auth, provider);
+      dispatch(closeSignUpModal());
+      dispatch(closeSignInModal());
+      setAuthenticated(true);
+      redirect("dashboard");
+    } catch (error: any) {
+      setError(error.toString());
+    } finally {
+      setLoadingGoogle(false);
     }
   }
 
   async function handleForgotPassword(email: string) {
-    setLoading2(true);
+    setLoadingForgotPass(true);
     try {
       await sendPasswordResetEmail(auth, email);
       setFeedback("Instructions Sent: Check your email inbox");
     } catch (error: any) {
       setError(error.toString());
     } finally {
-      setLoading2(false);
+      setLoadingForgotPass(false);
     }
   }
 
@@ -140,7 +166,13 @@ const useAuth = () => {
     handleSignUp,
     handleForgotPassword,
     handleCheckout,
-    loading2,
+    handleGuestSignIn,
+    loadingSignIn,
+    loadingForgotPass,
+    loadingGoogle,
+    loadingSignOut,
+    loadingSignUp,
+    loadingGuest,
     error,
     feedback,
     authenticated,

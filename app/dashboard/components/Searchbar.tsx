@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { FaSearch, FaRegClock } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 import { useDebounce } from "use-debounce";
 import MobileMenu from "./MobileMenu";
-import Link from "next/link";
 import SearchSkeleton from "../ui/SearchSkeleton";
+import SearchItem from "../ui/SearchItem";
 
 const Searchbar = () => {
   const [query, setQuery] = useState("");
@@ -42,6 +42,7 @@ const Searchbar = () => {
       <div className="flex w-full h-full justify-between mx-auto max-w-368 items-center">
         <div className="flex gap-2 w-full max-w-100 items-center h-11 bg-white/5 border border-white/10 backdrop-blur-xl focus-within:border-purple-500/50 focus-within:bg-white/10 transition-all duration-300 rounded-full relative">
           <FaSearch className="absolute left-2 text-white/40" />
+
           <input
             type="text"
             value={query}
@@ -63,33 +64,12 @@ const Searchbar = () => {
                   <SearchSkeleton />
                 ) : results.length > 0 ? (
                   results.map((movie: any) => (
-                    <Link
+                    <SearchItem
                       key={movie.id}
-                      href={`/movie/${movie.id}`}
-                      onClick={() => {
-                        setQuery("");
-                        setResults([]);
-                      }}
-                      className="flex items-center gap-4 p-4 hover:bg-white/5 transition-colors border-b border-white/5 last:border-0"
-                    >
-                      <img
-                        src={movie.imageLink}
-                        alt={movie.title}
-                        className="w-14 aspect-2/3 object-cover rounded-lg shadow-lg"
-                      />
-                      <div className="flex flex-col gap-0.5">
-                        <h3 className="font-bold text-sm text-white">
-                          {movie.title}
-                        </h3>
-                        <p className="text-xs text-white/50">
-                          {movie.director}
-                        </p>
-                        <div className="flex items-center gap-1.5 mt-1 text-[10px] text-white/30">
-                          <FaRegClock size={10} />
-                          <span>N/A</span>
-                        </div>
-                      </div>
-                    </Link>
+                      movie={movie}
+                      setQuery={setQuery}
+                      setResults={setResults}
+                    />
                   ))
                 ) : (
                   <div className="p-10 flex flex-col items-center justify-center text-center gap-2">

@@ -6,13 +6,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
 import { openSignInModal, closeSignUpModal } from "@/redux/slices/modalSlice";
 import { UserIcon, XMarkIcon } from "@heroicons/react/24/solid";
-import { FaGoogle } from "react-icons/fa";
+import { FaGoogle, FaSpinner } from "react-icons/fa";
 import useAuth from "@/hooks/useAuth";
 
 const SignUpModal = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { handleSignUp, error } = useAuth();
+  const {
+    handleSignIn,
+    handleSignUp,
+    handleGoogleSignIn,
+    handleGuestSignIn,
+    loadingGoogle,
+    loadingSignIn,
+    loadingSignUp,
+    loadingGuest,
+    error,
+  } = useAuth();
   const isOpen = useSelector(
     (state: RootState) => state.modals.signUpModalOpen,
   );
@@ -41,20 +51,28 @@ const SignUpModal = () => {
           <div className="flex flex-col">
             <div className="w-full gap-3 flex flex-col">
               <button
-                className="border-3 border-gray-200 rounded-xl 
-                      px-5 py-3 text-sm text-left flex gap-3 items-center
-                       text-[#404654] font-semibold hover:bg-black/10"
+                onClick={() => {
+                  handleGoogleSignIn();
+                }}
+                className="border-3 border-gray-200 rounded-xl px-5 py-3 text-sm text-left flex gap-3 items-center text-[#404654] font-semibold hover:bg-black/10"
               >
-                <FaGoogle />
-                <span>Login with Google</span>
+                <FaGoogle className="w-4" />
+                <span className={`${loadingGoogle && "animate-spin"}`}>
+                  {loadingGoogle ? <FaSpinner /> : "Login with Google"}
+                </span>
               </button>
               <button
+                onClick={() => {
+                  handleGuestSignIn("john@gmail.com", "676767");
+                }}
                 className="border-3 border-gray-200 rounded-xl 
                       px-5 py-3 text-sm text-left flex gap-3 items-center
                        text-[#404654] font-semibold hover:bg-black/10"
               >
                 <UserIcon className="w-4" />
-                <span>Login as Guest</span>
+                <span className={`${loadingGuest && "animate-spin"}`}>
+                  {loadingGuest ? <FaSpinner /> : "Login as Guest"}
+                </span>
               </button>
             </div>
             <div className="flex justify-center items-center my-5 text-sm gap-7">
@@ -89,9 +107,15 @@ const SignUpModal = () => {
             <button
               className="bg-[#320580] text-white 
                     w-full h-11 rounded-full font-semibold "
-              onClick={() => handleSignUp(email, password)}
+              onClick={() => {
+                handleSignUp(email, password);
+              }}
             >
-              Sign Up
+              <span
+                className={`flex justify-center ${loadingSignUp && "animate-spin"}`}
+              >
+                {loadingSignUp ? <FaSpinner size={20} /> : "Sign Up"}
+              </span>
             </button>
           </div>
           <div className="flex justify-center mt-3 gap-1 text-sm">

@@ -12,11 +12,20 @@ import {
 import { UserIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { FaGoogle } from "react-icons/fa";
 import useAuth from "@/hooks/useAuth";
+import { FaSpinner } from "react-icons/fa";
 
 const SignInModal = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { handleSignIn, handleGoogleSignIn, authenticated, error } = useAuth();
+  const {
+    handleSignIn,
+    handleGoogleSignIn,
+    handleGuestSignIn,
+    loadingGoogle,
+    loadingSignIn,
+    loadingGuest,
+    error,
+  } = useAuth();
   const isOpen = useSelector(
     (state: RootState) => state.modals.signInModalOpen,
   );
@@ -47,25 +56,32 @@ const SignInModal = () => {
           <div className="flex flex-col">
             <div className="w-full gap-3 flex flex-col">
               <button
-                className="border-3 border-gray-200 rounded-xl 
-              px-5 py-3 text-sm text-left flex gap-3 items-center
-               text-[#404654] font-semibold hover:bg-black/10"
-                onClick={() => handleGoogleSignIn()}
+                className="border-3 border-gray-200 rounded-xl px-5 py-3 text-sm text-left flex gap-3 items-center text-[#404654] font-semibold hover:bg-black/10"
+                onClick={() => {
+                  handleGoogleSignIn();
+                }}
               >
-                <FaGoogle />
-                <span>Login with Google</span>
+                <FaGoogle className="w-4" />
+                <span className={`${loadingGoogle && "animate-spin"}`}>
+                  {loadingGoogle ? (
+                    <FaSpinner size={20} />
+                  ) : (
+                    "Login with Google"
+                  )}
+                </span>
               </button>
               <button
                 className="border-3 border-gray-200 rounded-xl 
               px-5 py-3 text-sm text-left flex gap-3 items-center
                text-[#404654] font-semibold hover:bg-black/10"
                 onClick={() => {
-                  handleSignIn("john@gmail.com", "676767");
-                  dispatch(closeSignInModal());
+                  handleGuestSignIn("john@gmail.com", "676767");
                 }}
               >
                 <UserIcon className="w-4" />
-                <span>Login as Guest</span>
+                <span className={`${loadingSignIn && "animate-spin"}`}>
+                  {loadingSignIn ? <FaSpinner size={20} /> : "Login as Guest"}
+                </span>
               </button>
             </div>
             <div className="flex justify-center items-center my-5 text-sm gap-7">
@@ -111,7 +127,11 @@ const SignInModal = () => {
             w-full h-11 rounded-full font-semibold mt-4"
               onClick={() => handleSignIn(email, password)}
             >
-              Log in
+              <span
+                className={`flex justify-center ${loadingSignIn && "animate-spin"}`}
+              >
+                {loadingSignIn ? <FaSpinner size={20} /> : "Log in"}
+              </span>
             </button>
           </div>
           <div className="flex justify-center mt-3 gap-1 text-sm">

@@ -13,7 +13,7 @@ const Hero = () => {
             Unleash the Power of AI
           </span>
         </div>
-        <h1 className="header__title">
+        <h1 className="header__title flex items-end gap-4">
           Ultimate AI <br />
           Summariser
           <Image
