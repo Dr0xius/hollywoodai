@@ -25,6 +25,7 @@ const Page = async ({ params }: apiProp) => {
           title={movies?.title}
           author={movies?.director}
           poster={movies?.imageLink}
+          movieId={movies?.id}
         />
       </div>
     </div>

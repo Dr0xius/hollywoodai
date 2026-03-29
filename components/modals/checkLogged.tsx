@@ -10,7 +10,7 @@ import useAuth from "@/hooks/useAuth";
 
 const CheckLogged = () => {
   const user = useSelector((state: RootState) => state.user.username);
-  const { loading2 } = useAuth();
+
   const loading = useSelector(
     (state: RootState) => state.loading.loadingScreenOpen,
   );
@@ -20,7 +20,6 @@ const CheckLogged = () => {
     <>
       <SignUpModal /> <SignInModal /> <ForgotPassModal />
     </>
-    // <SignInModal />
   );
 };
 
