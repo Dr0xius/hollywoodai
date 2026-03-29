@@ -9,6 +9,8 @@ import SideLinks from "../ui/SideLinks";
 import { SidebarLinks } from "@/types";
 import useAuth from "@/hooks/useAuth";
 import SignInModal from "@/components/modals/SignInModal";
+import SignUpModal from "@/components/modals/SignUpModal";
+import ForgotPassModal from "@/components/modals/ForgotPassModal";
 
 const Sidebar = () => {
   const { handleSignOut } = useAuth();
@@ -86,6 +88,8 @@ const Sidebar = () => {
         </ul>
       </div>
       <SignInModal />
+      <SignUpModal />
+      <ForgotPassModal />
     </aside>
   );
 };

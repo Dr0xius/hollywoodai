@@ -3,15 +3,12 @@ import React from "react";
 import UpgradeButton from "./UpgradeButton";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import SettingsSkeleton from "./SettingsSkeleton";
-import UnLogged from "./UnLogged";
 
 const SettingsInfo = () => {
   const isPremium = useSelector((state: RootState) => state.user.isPremium);
   const subTier = useSelector((state: RootState) => state.user.subTier);
   const email = useSelector((state: RootState) => state.user.email);
-  const user = useSelector((state: RootState) => state.user.username);
-  const loading = useSelector((state: RootState) => state.user.loading);
+
   return (
     <div className="pt-6 pb-30 px-4 items-start mx-auto w-full h-full max-w-384 flex flex-col">
       <div className="pt-3 border-b border-white/10 px-4 mx-auto w-full max-w-384">

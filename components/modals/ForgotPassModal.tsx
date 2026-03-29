@@ -6,13 +6,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import useAuth from "@/hooks/useAuth";
+import { FaSpinner } from "react-icons/fa";
 
 const ForgotPassModal = () => {
   const [email, setEmail] = useState("");
   const isOpen = useSelector(
     (state: RootState) => state.modals.forgotPassModalOpen,
   );
-  const { handleForgotPassword, feedback, error } = useAuth();
+  const { handleForgotPassword, loadingForgotPass, feedback, error } =
+    useAuth();
   const dispatch: AppDispatch = useDispatch();
 
   return (
@@ -64,7 +66,15 @@ const ForgotPassModal = () => {
                 handleForgotPassword(email);
               }}
             >
-              Send Instructions
+              <span
+                className={`flex justify-center ${loadingForgotPass && "animate-spin"}`}
+              >
+                {loadingForgotPass ? (
+                  <FaSpinner size={20} />
+                ) : (
+                  "Send Instructions"
+                )}
+              </span>
             </button>
           </div>
         </div>

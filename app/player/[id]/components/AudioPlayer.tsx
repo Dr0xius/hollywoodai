@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FaPlay, FaPause, FaStepForward, FaStepBackward } from "react-icons/fa";
 
 interface BottomPlayerProps {
@@ -8,9 +8,16 @@ interface BottomPlayerProps {
   title: string;
   author: string;
   poster: string;
+  movieId: [];
 }
 
-const BottomPlayer = ({ src, title, author, poster }: BottomPlayerProps) => {
+const BottomPlayer = ({
+  src,
+  title,
+  author,
+  poster,
+  movieId,
+}: BottomPlayerProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -51,6 +58,15 @@ const BottomPlayer = ({ src, title, author, poster }: BottomPlayerProps) => {
   const onLoadedMetadata = () => {
     setDuration(audioRef.current?.duration || 0);
   };
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (audio.readyState >= 1) {
+      setDuration(audio.duration);
+    }
+  }, [movieId]);
 
   const formatTime = (time: number) => {
     if (isNaN(time)) return "0:00";

@@ -42,6 +42,10 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    setFavorites: (state, action) => {
+      state.favorites = action.payload;
+    },
+
     toggleFavorites: (state, action) => {
       const exists = state.favorites.find(
         (movie) => movie.id === action.payload.id,
@@ -79,6 +83,7 @@ const userSlice = createSlice({
   },
 });
 
-export const { signInUser, signOutUser, toggleFavorites } = userSlice.actions;
+export const { signInUser, signOutUser, toggleFavorites, setFavorites } =
+  userSlice.actions;
 
 export default userSlice.reducer;
