@@ -13,7 +13,7 @@ const Hero = () => {
             Unleash the Power of AI
           </span>
         </div>
-        <h1 className="header__title flex items-end gap-4">
+        <h1 className="header__title relative">
           Ultimate AI <br />
           Summariser
           <Image
@@ -21,7 +21,7 @@ const Hero = () => {
             alt="Lightning Bolt Icon"
             width={47}
             height={62}
-            className="header__title__icon"
+            className="header__title__icon inline ml-4 mb-4"
           />
         </h1>
         <p className="header__paragraph">
