@@ -27,7 +27,11 @@ const Favorites = () => {
       <div className="w-full min-w-0">
         <div className="pt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
           {favorites.map((movie) => (
-            <MovieCard key={movie.id} movie={movie} />
+            <MovieCard
+              key={movie.id}
+              movie={movie}
+              src={`https://advanced-internship-api-production.up.railway.app/${movie.audioLink}`}
+            />
           ))}
         </div>
       </div>

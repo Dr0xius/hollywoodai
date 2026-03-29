@@ -1,12 +1,10 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
-import { FaSearch, FaRegClock } from "react-icons/fa";
+import React, { useState, useEffect } from "react";
+import { FaSearch } from "react-icons/fa";
 import { useDebounce } from "use-debounce";
 import MobileMenu from "./MobileMenu";
-import Link from "next/link";
 import SearchSkeleton from "../ui/SearchSkeleton";
-import useFormatTime from "@/hooks/useFormatTime";
 import SearchItem from "../ui/SearchItem";
 
 const Searchbar = () => {
@@ -29,7 +27,6 @@ const Searchbar = () => {
         );
         const data = await response.json();
         setResults(data.data || []);
-        console.log(results);
       } catch (error) {
         console.error("Search error:", error);
       } finally {

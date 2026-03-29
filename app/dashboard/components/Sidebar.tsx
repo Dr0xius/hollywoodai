@@ -55,7 +55,7 @@ const Sidebar = () => {
     },
   ];
   return (
-    <aside className="hidden h-screen w-56 md:block shrink-0 fixed top-0 left-0 z-20 text-white border-r border-white/10">
+    <aside className="hidden h-screen w-56 md:block shrink-0 fixed top-0 left-0 z-30 text-white border-r border-white/10">
       <div className="flex flex-col items-start py-5 px-3">
         <Image
           src="/assets/logo-light.png"

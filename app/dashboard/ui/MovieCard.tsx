@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import MovieCardSkeleton from "./MovieCardSkeleton";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useFormatTime from "@/hooks/useFormatTime";
 
 interface MovieCardProps {
@@ -23,6 +23,15 @@ const MovieCard = ({ movie, src }: MovieCardProps) => {
   const onLoadedMetadata = () => {
     setDuration(audioRef.current?.duration || 0);
   };
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (audio.readyState >= 1) {
+      setDuration(audio.duration);
+    }
+  }, [movie.id]);
 
   return (
     <>
